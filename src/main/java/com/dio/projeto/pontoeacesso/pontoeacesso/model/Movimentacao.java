@@ -3,9 +3,7 @@ package com.dio.projeto.pontoeacesso.pontoeacesso.model;
 
 import lombok.*;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
+@Entity
 public class Movimentacao {
 
 
@@ -27,11 +26,14 @@ public class Movimentacao {
         private long idMovimento;
         private long idUsuario;
     }
+    @Id
     @EmbeddedId
     private MovimentacaoId id;
     private LocalDateTime dataEntrada;
     private LocalDateTime datasaida;
     private BigDecimal permanencia;
+    @ManyToOne
     private Ocorrencia ocorrencia;
+    @ManyToOne
     private Calendario calendario;
 }
