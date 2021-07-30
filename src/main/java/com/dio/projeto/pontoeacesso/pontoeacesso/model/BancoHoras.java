@@ -3,10 +3,7 @@ package com.dio.projeto.pontoeacesso.pontoeacesso.model;
 
 import lombok.*;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

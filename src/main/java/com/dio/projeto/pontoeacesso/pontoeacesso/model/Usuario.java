@@ -3,9 +3,7 @@ package com.dio.projeto.pontoeacesso.pontoeacesso.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -18,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Usuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @ManyToOne
     private CategoriaUsuario categoriaUsuario;
