@@ -4,6 +4,8 @@ package com.dio.projeto.pontoeacesso.pontoeacesso.service;
 import com.dio.projeto.pontoeacesso.pontoeacesso.model.JornadaTrabalho;
 import com.dio.projeto.pontoeacesso.pontoeacesso.repository.JornadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,20 +24,51 @@ public class JornadaService {
     public JornadaTrabalho save(JornadaTrabalho jornadaTrabalho){
         return jornadaRepository.save(jornadaTrabalho);
     }
-    public JornadaTrabalho update(JornadaTrabalho jornadaTrabalho){
-        return jornadaRepository.save(jornadaTrabalho);
+
+
+
+    public ResponseEntity<JornadaTrabalho> update(Long idJornada, JornadaTrabalho newJornadaTrabalho){
+
+        Optional<JornadaTrabalho> oldJornada = jornadaRepository.findById(idJornada);
+
+        if(oldJornada.isPresent()){
+            oldJornada.get().setDescricao(newJornadaTrabalho.getDescricao());
+            return new ResponseEntity<JornadaTrabalho>(jornadaRepository.save(oldJornada.get()), HttpStatus.OK);
+        }
+
+        else
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public Optional<JornadaTrabalho> getById(Long idJornada){
-        return jornadaRepository.findById(idJornada);
+    public ResponseEntity<JornadaTrabalho> getById(Long idJornada){
+        Optional<JornadaTrabalho> jornada = jornadaRepository.findById(idJornada);
+        if(jornada.isPresent()){
+            return new ResponseEntity<JornadaTrabalho>(jornada.get(), HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<JornadaTrabalho>(HttpStatus.NOT_FOUND);
 
     }
 
-    public void delete(JornadaTrabalho jornadaTrabalho){
-        jornadaRepository.delete(jornadaTrabalho);
+
+    public ResponseEntity<Void> delete(JornadaTrabalho jornadaTrabalho){
+        if(jornadaRepository.existsById(jornadaTrabalho.getId())){
+            jornadaRepository.deleteById(jornadaTrabalho.getId());
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        }
+        else
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     }
-    public void deleteById(Long idJornada){
-        jornadaRepository.deleteById(idJornada);
+
+
+    public ResponseEntity<Void> deleteById(Long idJornada){
+        if(jornadaRepository.existsById(idJornada)){
+            jornadaRepository.deleteById(idJornada);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        }
+        else
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 
     }
 
