@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class JornadaService {
 
-    JornadaRepository jornadaRepository;
+    final JornadaRepository jornadaRepository;
 
     @Autowired
     public JornadaService(JornadaRepository jornadaRepository) {
@@ -43,11 +43,7 @@ public class JornadaService {
 
     public ResponseEntity<JornadaTrabalho> getById(Long idJornada){
         Optional<JornadaTrabalho> jornada = jornadaRepository.findById(idJornada);
-        if(jornada.isPresent()){
-            return new ResponseEntity<JornadaTrabalho>(jornada.get(), HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<JornadaTrabalho>(HttpStatus.NOT_FOUND);
+        return jornada.map(jornadaTrabalho -> new ResponseEntity<>(jornadaTrabalho, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 

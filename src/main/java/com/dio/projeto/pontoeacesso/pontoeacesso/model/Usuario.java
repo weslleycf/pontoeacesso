@@ -2,16 +2,17 @@ package com.dio.projeto.pontoeacesso.pontoeacesso.model;
 
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Builder
 @Entity
 public class Usuario {
@@ -31,4 +32,17 @@ public class Usuario {
     private LocalDateTime incioJornada;
     private LocalDateTime finalJornada;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Usuario usuario = (Usuario) o;
+
+        return Objects.equals(id, usuario.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1225039686;
+    }
 }
